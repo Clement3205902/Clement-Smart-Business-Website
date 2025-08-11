@@ -55,6 +55,12 @@ function addMessage(message, isBot = true) {
 }
 
 function sendMessage() {
+    // Check if smart chatbot is active, if so, don't use old system
+    if (window.smartChatbot && window.chatInterface) {
+        console.log('Using smart AI chatbot instead of basic responses');
+        return; // Let smart chatbot handle it
+    }
+    
     const message = chatInput.value.trim();
     if (message) {
         addMessage(message, false);
@@ -343,4 +349,97 @@ document.querySelectorAll('select[name="service"]').forEach(select => {
     select.addEventListener('change', function() {
         updatePricingForService(this.value);
     });
+});
+
+// Hero Slideshow Management
+function initHeroSlideshow() {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+    
+    let currentSlide = 0;
+    
+    function showNextSlide() {
+        // Hide current slide
+        slides[currentSlide].classList.remove('active');
+        
+        // Move to next slide
+        currentSlide = (currentSlide + 1) % slides.length;
+        
+        // Show next slide
+        slides[currentSlide].classList.add('active');
+    }
+    
+    // Change slide every 6 seconds
+    setInterval(showNextSlide, 6000);
+}
+
+// Hero Chat Animation Management
+function initHeroAnimation() {
+    const chatDemo = document.querySelector('.chat-demo');
+    if (!chatDemo) return;
+    
+    // Restart animation every 15 seconds (to sync better with slideshow)
+    setInterval(() => {
+        // Reset all animations
+        const messages = document.querySelectorAll('.chat-message');
+        const typingIndicator = document.querySelector('.typing-indicator');
+        
+        messages.forEach(msg => {
+            msg.style.animation = 'none';
+            msg.style.opacity = '0';
+            msg.style.transform = 'translateY(20px)';
+        });
+        
+        if (typingIndicator) {
+            typingIndicator.style.animation = 'none';
+            typingIndicator.style.opacity = '0';
+        }
+        
+        // Restart animations after a brief delay
+        setTimeout(() => {
+            messages.forEach((msg, index) => {
+                msg.style.animation = `messageSlideIn 0.8s ease-out forwards`;
+                msg.style.animationDelay = `${(index + 1) * 2}s`;
+            });
+            
+            if (typingIndicator) {
+                typingIndicator.style.animation = 'typingSlideIn 0.8s ease-out 7s forwards';
+            }
+        }, 100);
+    }, 15000); // Restart every 15 seconds
+}
+
+// Initialize hero animation when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing DOMContentLoaded code...
+    const elements = document.querySelectorAll('.problem-card, .solution-card, .testimonial-card, .pricing-card');
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'all 0.6s ease';
+    });
+    
+    // Trigger initial check
+    animateOnScroll();
+    
+    // Initialize hero slideshow and animation
+    initHeroSlideshow();
+    initHeroAnimation();
+});
+
+// Add click handler to hero demo to show engagement
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.chat-demo')) {
+        // Add a pulse effect when clicked
+        const chatDemo = e.target.closest('.chat-demo');
+        chatDemo.style.transform = 'scale(1.05)';
+        chatDemo.style.transition = 'transform 0.2s ease';
+        
+        setTimeout(() => {
+            chatDemo.style.transform = 'scale(1)';
+        }, 200);
+        
+        // Show notification about the demo
+        showNotification('Like what you see? Book a free demo to see it in action for your business!', 'info');
+    }
 });

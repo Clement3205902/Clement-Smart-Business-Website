@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Chatbot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .test-conversation {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        .expected-result {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #4caf50;
+        }
+        .debug-info {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        #console-output {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 Smart Chatbot Memory Test</h1>
+        
+        <div class="test-instructions">
+            <h3>📋 Test Instructions:</h3>
+            <p>Test the exact conversation sequence to verify the chatbot remembers contact information:</p>
+            
+            <div class="test-conversation">
+1. "Hi, I'm John from ABC Plumbing"
+2. "My phone is 555-123-4567"  
+3. "john@abcplumbing.com"
+4. "I'd like a demo"
+            </div>
+            
+            <div class="expected-result">
+                <strong>✅ Expected Final Response:</strong><br>
+                "Perfect! I have your phone (555-123-4567) and email. I'll have someone call you within 30 minutes to schedule your demo!"
+            </div>
+        </div>
+        
+        <div class="debug-info">
+            <h3>🔍 Debug Tools:</h3>
+            <button onclick="checkLeadData()">Check Lead Data</button>
+            <button onclick="clearConsole()">Clear Console</button>
+            <button onclick="resetChatbot()">Reset Chatbot</button>
+            <button onclick="showSystemInfo()">System Info</button>
+            
+            <h4>Console Output:</h4>
+            <div id="console-output"></div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h3>🚀 Next Steps:</h3>
+            <ol>
+                <li><strong>Open your main website</strong> (index.html)</li>
+                <li><strong>Open browser console</strong> (Press F12)</li>
+                <li><strong>Start chatbot conversation</strong> with the test sequence above</li>
+                <li><strong>Watch console logs</strong> to see lead data extraction</li>
+                <li><strong>Verify the final response</strong> acknowledges both phone and email</li>
+            </ol>
+        </div>
+        
+        <div style="background: #ffebee; padding: 15px; border-radius: 5px; margin-top: 20px;">
+            <h4>🔧 If Still Having Issues:</h4>
+            <ul>
+                <li><strong>Hard refresh</strong> your browser (Ctrl+F5)</li>
+                <li><strong>Clear browser cache</strong></li>
+                <li><strong>Check console</strong> for any JavaScript errors</li>
+                <li><strong>Verify</strong> smart-chatbot.js is loading before script.js</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Capture console.log output
+        const originalLog = console.log;
+        const consoleOutput = document.getElementById('console-output');
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            consoleOutput.textContent += args.join(' ') + '\n';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        function clearConsole() {
+            consoleOutput.textContent = '';
+        }
+        
+        function checkLeadData() {
+            if (typeof window.checkLeadData === 'function') {
+                const data = window.checkLeadData();
+                console.log('Lead data check result:', data);
+            } else {
+                console.log('❌ checkLeadData function not available - chatbot may not be initialized');
+            }
+        }
+        
+        function resetChatbot() {
+            if (window.smartChatbot) {
+                window.smartChatbot.leadData = {};
+                window.smartChatbot.conversationHistory = [];
+                console.log('🔄 Chatbot reset - lead data cleared');
+            } else {
+                console.log('❌ Smart chatbot not found');
+            }
+        }
+        
+        function showSystemInfo() {
+            console.log('=== SYSTEM INFO ===');
+            console.log('Smart Chatbot Available:', !!window.smartChatbot);
+            console.log('Chat Interface Available:', !!window.chatInterface);
+            console.log('checkLeadData Available:', typeof window.checkLeadData === 'function');
+            console.log('Current URL:', window.location.href);
+            console.log('User Agent:', navigator.userAgent.substring(0, 50) + '...');
+            console.log('==================');
+        }
+        
+        // Auto-check system on load
+        setTimeout(showSystemInfo, 1000);
+    </script>
+</body>
+</html>

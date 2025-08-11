@@ -36,11 +36,39 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-video">
-            <video autoplay muted loop>
-                <source src="assets/chatbot-demo.mp4" type="video/mp4">
-                <!-- Placeholder for video - will use CSS background for now -->
-            </video>
+        <div class="hero-slideshow">
+            <!-- Image Slideshow Background -->
+            <div class="slideshow-container">
+                <div class="slide active" data-bg="service-professional"></div>
+                <div class="slide" data-bg="happy-customer"></div>
+                <div class="slide" data-bg="modern-office"></div>
+                <div class="slide" data-bg="automation-dashboard"></div>
+                <div class="slide" data-bg="phone-booking"></div>
+            </div>
+            
+            <!-- Chat Demo Overlay -->
+            <div class="hero-content-overlay">
+                <div class="chat-demo">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="chat-message bot-msg">
+                                <div class="message-bubble">Hi! I can help you schedule service. What do you need?</div>
+                            </div>
+                            <div class="chat-message user-msg">
+                                <div class="message-bubble">I need a plumber for a leak</div>
+                            </div>
+                            <div class="chat-message bot-msg">
+                                <div class="message-bubble">I can book that for you! What's your address?</div>
+                            </div>
+                            <div class="typing-indicator">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -383,9 +411,9 @@
             <i class="fas fa-comments"></i>
             <span class="chat-notification">1</span>
         </div>
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <h4>Hi! I'm here to help</h4>
+        <div class="chat-window enhanced" id="chatWindow">
+            <div class="chat-header ai-powered">
+                <h4>Hi! I'm your AI assistant</h4>
                 <button onclick="toggleChat()">×</button>
             </div>
             <div class="chat-messages" id="chatMessages">
@@ -400,6 +428,8 @@
         </div>
     </div>
 
+    <script src="advanced-images.js"></script>
+    <script src="smart-chatbot.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
