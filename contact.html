@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Smart Business Growth</title>
+    <meta name="description" content="Get in touch for your free demo. See how our automation system can help your service business get more jobs automatically.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="additional-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">SmartGrowth</a></h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="#demo" class="nav-cta">Book Free Demo</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Get Your Smart Website in 7 Days</h1>
+            <p>Book your free demo and see exactly how we'll automate your lead generation</p>
+        </div>
+    </section>
+
+    <!-- Contact Options -->
+    <section class="contact-options">
+        <div class="container">
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <div class="method-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Book Free Demo</h3>
+                    <p>See our system in action with a personalized 15-minute demo</p>
+                    <button onclick="openBookingWidget()" class="btn-primary">Schedule Now</button>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="method-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Call Direct</h3>
+                    <p>Speak with a specialist immediately about your automation needs</p>
+                    <a href="tel:+15551234567" class="btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        (555) 123-4567
+                    </a>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="method-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Send Message</h3>
+                    <p>Fill out the form below and we'll respond within 30 minutes</p>
+                    <a href="#contact-form" class="btn-secondary">Send Message</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Contact Form -->
+    <section id="contact-form" class="contact-form-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="form-info">
+                    <h2>Let's Discuss Your Business Growth</h2>
+                    <p>Tell us about your business and we'll create a custom automation strategy that gets you more jobs.</p>
+                    
+                    <div class="form-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Free 15-minute demo</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Custom strategy session</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>No obligation quote</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>7-day delivery guarantee</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Direct Contact Info</h3>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>(555) 123-4567</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@smartgrowth.com</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>Mon-Fri: 9AM-6PM EST</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Serving all US markets</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="main-contact-form">
+                    <form id="mainContactForm">
+                        <h3>Get Your Free Demo</h3>
+                        <p>Fill out this form and we'll call you within 30 minutes</p>
+                        
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="business">Business Name *</label>
+                            <input type="text" id="business" name="business" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Business Type *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select Your Business Type</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="electrical">Electrical</option>
+                                <option value="hvac">HVAC</option>
+                                <option value="handyman">Handyman</option>
+                                <option value="roofing">Roofing</option>
+                                <option value="garage-door">Garage Door</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="cleaning">Cleaning Services</option>
+                                <option value="pest-control">Pest Control</option>
+                                <option value="other">Other Service Business</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="leads">How many leads do you get per week?</label>
+                            <select id="leads" name="leads">
+                                <option value="">Select Range</option>
+                                <option value="1-10">1-10 leads/week</option>
+                                <option value="11-25">11-25 leads/week</option>
+                                <option value="26-50">26-50 leads/week</option>
+                                <option value="50+">50+ leads/week</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="biggest-challenge">What's your biggest challenge with getting new customers?</label>
+                            <textarea id="biggest-challenge" name="biggest-challenge" rows="4" placeholder="e.g., Missing calls when I'm on jobs, slow to respond to online inquiries, no follow-up system..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="best-time">Best time to call you?</label>
+                            <select id="best-time" name="best-time">
+                                <option value="">Select Time</option>
+                                <option value="morning">Morning (9AM-12PM)</option>
+                                <option value="afternoon">Afternoon (12PM-5PM)</option>
+                                <option value="evening">Evening (5PM-7PM)</option>
+                                <option value="anytime">Anytime</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="urgent" id="urgent">
+                                <span class="checkbox-custom"></span>
+                                This is urgent - I'm losing customers to competitors
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary btn-large">
+                            <i class="fas fa-rocket"></i>
+                            Get My Free Demo Now
+                        </button>
+                        
+                        <p class="form-disclaimer">
+                            <i class="fas fa-lock"></i>
+                            Your information is 100% secure. We'll never share it with anyone.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Preview -->
+    <section class="demo-preview">
+        <div class="container">
+            <h2 class="section-title">What You'll See in Your Demo</h2>
+            <div class="demo-items">
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Live AI Chatbot</h3>
+                    <p>See how our chatbot qualifies leads and books appointments in real-time</p>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Booking System</h3>
+                    <p>Watch customers schedule their own appointments directly on your site</p>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-email"></i>
+                    </div>
+                    <h3>Follow-up Automation</h3>
+                    <p>See the email and SMS sequences that convert leads into customers</p>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>View real-time tracking of leads, bookings, and revenue growth</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Common Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>How long does the demo take?</h3>
+                    <p>Just 15 minutes. We'll show you exactly how the system works for your specific type of business and answer all your questions.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Is there any obligation?</h3>
+                    <p>Absolutely not. The demo is completely free with no pressure. We want you to see the value before making any decisions.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How quickly can you get started?</h3>
+                    <p>We can have your complete automation system live within 7 days of signing up. Our fastest setup was 3 days for an urgent client.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Do you offer support after launch?</h3>
+                    <p>Yes! All packages include ongoing support, hosting, updates, and performance monitoring. We're with you for the long haul.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency-section">
+        <div class="container">
+            <div class="urgency-content">
+                <h2>Don't Let Another Lead Go to Your Competition</h2>
+                <p>Every day you wait is another day your competitors are booking the jobs you should be getting. Our clients typically see results within the first week.</p>
+                
+                <div class="urgency-stats">
+                    <div class="urgency-stat">
+                        <span class="stat-number">40%</span>
+                        <span class="stat-label">of service calls go unanswered</span>
+                    </div>
+                    <div class="urgency-stat">
+                        <span class="stat-number">75%</span>
+                        <span class="stat-label">of customers book the first responder</span>
+                    </div>
+                    <div class="urgency-stat">
+                        <span class="stat-number">$2,400</span>
+                        <span class="stat-label">average value per lost customer</span>
+                    </div>
+                </div>
+                
+                <div class="urgency-cta">
+                    <button onclick="openBookingWidget()" class="btn-primary btn-large">
+                        Book Your Demo Now - Limited Spots Available
+                    </button>
+                    <p>⚡ We only take 3 new clients per month to ensure quality service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SmartGrowth</h3>
+                    <p>Helping service businesses win more jobs with intelligent automation.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Website Development</a></li>
+                        <li><a href="services.html">AI Chatbot Setup</a></li>
+                        <li><a href="services.html">Automation Systems</a></li>
+                        <li><a href="services.html">Lead Generation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#demo">Book Demo</a></li>
+                        <li><a href="services.html#faq">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> hello@smartgrowth.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM EST</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SmartGrowth. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky CTA Button -->
+    <div class="sticky-cta">
+        <a href="#contact-form" class="btn-primary">Book Free Demo</a>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Enhanced form handling for contact page
+        document.getElementById('mainContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitButton.disabled = true;
+            
+            // Simulate form processing
+            setTimeout(() => {
+                // Show success message
+                showNotification('Thank you! We\'ll call you within 30 minutes to schedule your demo.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+                // Reset button
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                
+                // Open booking widget after short delay
+                setTimeout(() => {
+                    openBookingWidget();
+                }, 3000);
+                
+                // Log for analytics
+                console.log('Contact form submitted:', data);
+                
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
