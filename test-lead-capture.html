@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Lead Capture System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-form {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+        .lead-data {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Lead Capture Test System</h1>
+        <p><strong>Purpose:</strong> Test that your lead capture system is working and you receive emails.</p>
+        
+        <div class="status info">
+            <strong>Status:</strong> <span id="systemStatus">Checking system...</span>
+        </div>
+
+        <div class="test-form">
+            <h3>📝 Test Lead Submission</h3>
+            <form id="testForm">
+                <input type="text" name="name" placeholder="Your Name" value="Test User" required>
+                <input type="email" name="email" placeholder="Email" value="test@example.com" required>
+                <input type="tel" name="phone" placeholder="Phone" value="(555) 123-4567">
+                <input type="text" name="business" placeholder="Business Name" value="Test Business">
+                <select name="service" required>
+                    <option value="">Select Service Type</option>
+                    <option value="plumbing" selected>Plumbing</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="hvac">HVAC</option>
+                </select>
+                <textarea name="message" placeholder="Test message..." rows="3">This is a test lead to verify the capture system is working correctly.</textarea>
+                <button type="submit">🚀 Send Test Lead</button>
+            </form>
+        </div>
+
+        <div id="result"></div>
+        
+        <div class="test-form">
+            <h3>📊 System Information</h3>
+            <div class="lead-data" id="systemInfo">
+                <div>Lead Capture Available: <span id="leadCaptureStatus">Checking...</span></div>
+                <div>Session ID: <span id="sessionId">...</span></div>
+                <div>Current URL: <span id="currentUrl">...</span></div>
+                <div>User Agent: <span id="userAgent">...</span></div>
+            </div>
+        </div>
+
+        <div class="test-form">
+            <h3>📈 Previous Test Results</h3>
+            <button onclick="showStoredLeads()">Show Stored Test Leads</button>
+            <button onclick="clearStoredLeads()">Clear Test Data</button>
+            <div class="lead-data" id="storedLeads"></div>
+        </div>
+
+        <div class="status info">
+            <strong>Expected Result:</strong> You should receive an email at ahorsuclement@gmail.com with the test lead details within 2 minutes.
+        </div>
+    </div>
+
+    <script src="lead-capture-setup.js"></script>
+    <script>
+        // Check system status
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusEl = document.getElementById('systemStatus');
+            const leadCaptureStatusEl = document.getElementById('leadCaptureStatus');
+            const sessionIdEl = document.getElementById('sessionId');
+            const currentUrlEl = document.getElementById('currentUrl');
+            const userAgentEl = document.getElementById('userAgent');
+
+            if (window.leadCapture) {
+                statusEl.textContent = '✅ Lead Capture System Ready';
+                statusEl.parentElement.className = 'status success';
+                leadCaptureStatusEl.textContent = '✅ Available';
+            } else {
+                statusEl.textContent = '❌ Lead Capture System Not Found';
+                statusEl.parentElement.className = 'status error';
+                leadCaptureStatusEl.textContent = '❌ Not Available';
+            }
+
+            // Show system info
+            sessionIdEl.textContent = sessionStorage.getItem('leadSessionId') || 'Not set';
+            currentUrlEl.textContent = window.location.href;
+            userAgentEl.textContent = navigator.userAgent.substring(0, 50) + '...';
+        });
+
+        // Handle test form submission
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultEl = document.getElementById('result');
+            const submitBtn = e.target.querySelector('button');
+            const originalText = submitBtn.textContent;
+            
+            // Show loading
+            submitBtn.textContent = '⏳ Testing...';
+            submitBtn.disabled = true;
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const testLead = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                business: formData.get('business'),
+                service: formData.get('service'),
+                message: formData.get('message'),
+                testLead: true,
+                testTimestamp: new Date().toISOString()
+            };
+
+            try {
+                if (window.leadCapture) {
+                    const result = await window.leadCapture.captureRealtimeLead(testLead, 'test-form');
+                    
+                    resultEl.innerHTML = `
+                        <div class="status success">
+                            ✅ <strong>Test Successful!</strong> Check your email at ahorsuclement@gmail.com
+                        </div>
+                        <div class="lead-data">
+                            <strong>Lead Data Captured:</strong><br>
+                            ${JSON.stringify(result, null, 2)}
+                        </div>
+                    `;
+                } else {
+                    throw new Error('Lead capture system not available');
+                }
+            } catch (error) {
+                resultEl.innerHTML = `
+                    <div class="status error">
+                        ❌ <strong>Test Failed:</strong> ${error.message}
+                    </div>
+                    <div class="lead-data">
+                        <strong>Error Details:</strong><br>
+                        ${error.stack || error.toString()}
+                    </div>
+                `;
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Show stored leads
+        function showStoredLeads() {
+            const leads = JSON.parse(localStorage.getItem('capturedLeads') || '[]');
+            const el = document.getElementById('storedLeads');
+            
+            if (leads.length === 0) {
+                el.innerHTML = '<em>No stored leads found</em>';
+            } else {
+                el.innerHTML = `
+                    <strong>Found ${leads.length} stored leads:</strong><br>
+                    ${JSON.stringify(leads, null, 2)}
+                `;
+            }
+        }
+
+        // Clear stored leads
+        function clearStoredLeads() {
+            localStorage.removeItem('capturedLeads');
+            localStorage.removeItem('leadAnalytics');
+            sessionStorage.removeItem('leadSessionId');
+            document.getElementById('storedLeads').innerHTML = '<em>Test data cleared</em>';
+        }
+    </script>
+</body>
+</html>

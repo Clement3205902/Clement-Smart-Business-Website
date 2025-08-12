@@ -110,10 +110,10 @@ if (chatInput) {
     });
 }
 
-// Lead Form Submission
+// Lead Form Submission - REAL LEAD CAPTURE
 const leadForm = document.getElementById('leadForm');
 if (leadForm) {
-    leadForm.addEventListener('submit', function(e) {
+    leadForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Get form data
@@ -127,19 +127,35 @@ if (leadForm) {
             message: formData.get('message')
         };
         
-        // Show success message
-        showNotification('Thank you! We\'ll contact you within 30 minutes to schedule your free demo.', 'success');
+        // Show loading state
+        const submitBtn = leadForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
         
-        // Reset form
-        leadForm.reset();
-        
-        // Here you would typically send the data to your backend
-        console.log('Lead form submitted:', data);
-        
-        // Simulate booking calendar opening
-        setTimeout(() => {
-            openBookingWidget();
-        }, 2000);
+        try {
+            // SEND REAL LEAD TO CLEMENT
+            if (window.leadCapture) {
+                await window.leadCapture.captureRealtimeLead(data, 'demo-form');
+            }
+            
+            // Reset form
+            leadForm.reset();
+            
+            // Trigger immediate booking flow
+            setTimeout(() => {
+                showNotification('⚡ Want to skip the wait? Book your demo call right now!', 'info');
+                setTimeout(openBookingWidget, 2000);
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Error capturing lead:', error);
+            showNotification('Having trouble? Call (571) 320-5902 directly for immediate help!', 'warning');
+        } finally {
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
 
@@ -351,10 +367,10 @@ document.querySelectorAll('select[name="service"]').forEach(select => {
     });
 });
 
-// Contact Form Submission
+// Contact Form Submission - REAL LEAD CAPTURE
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Get form data
@@ -368,22 +384,35 @@ if (contactForm) {
             message: formData.get('message')
         };
         
-        // Show success message
-        showNotification('Thank you for your message! We\'ll get back to you within 2 hours.', 'success');
+        // Show loading state
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
         
-        // Reset form
-        contactForm.reset();
-        
-        // Here you would typically send the data to your backend
-        console.log('Contact form submitted:', data);
-        
-        // Simulate opening booking widget after contact
-        setTimeout(() => {
-            showNotification('Would you like to schedule a call right now?', 'info');
+        try {
+            // SEND REAL LEAD TO CLEMENT
+            if (window.leadCapture) {
+                await window.leadCapture.captureRealtimeLead(data, 'contact-form');
+            }
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Offer immediate booking
             setTimeout(() => {
-                openBookingWidget();
-            }, 2000);
-        }, 3000);
+                showNotification('Would you like to schedule a call right now?', 'info');
+                setTimeout(openBookingWidget, 2000);
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Error capturing lead:', error);
+            showNotification('Having trouble? Call (571) 320-5902 directly!', 'warning');
+        } finally {
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
 

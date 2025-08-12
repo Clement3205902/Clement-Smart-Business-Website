@@ -330,7 +330,11 @@
     }
 
     try{
-      if(WEBHOOK_URL && WEBHOOK_URL.startsWith('http')){
+      // SEND REAL LEAD TO CLEMENT
+      if(window.leadCapture) {
+        await window.leadCapture.captureRealtimeLead(payload, 'chatbot');
+        addBot("🎯 Perfect! Clement will personally call you within 30 minutes to discuss your automation setup!");
+      } else if(WEBHOOK_URL && WEBHOOK_URL.startsWith('http')){
         await fetch(WEBHOOK_URL, { 
           method:'POST', 
           headers:{'Content-Type':'application/json'}, 
@@ -344,6 +348,10 @@
     } catch(err){
       console.error('Webhook error:', err);
       addBot("I couldn't send the demo right now, but I saved your info. We'll reach out within the hour!");
+      // Fallback: show phone number
+      setTimeout(() => {
+        addBot("Or call us directly at (571) 320-5902 for immediate help!");
+      }, 2000);
     }
 
     setTimeout(() => {
