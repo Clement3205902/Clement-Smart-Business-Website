@@ -330,8 +330,21 @@
     }
 
     try{
-      // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES
-      if(window.directLeadCapture) {
+      // SEND REAL EMAIL TO CLEMENT'S INBOX + STORE LOCALLY
+      let emailSent = false;
+      if(window.web3FormsNotifications) {
+        const result = await window.web3FormsNotifications.processCompleteNotification(payload, 'chatbot');
+        emailSent = result.email.success;
+        if(emailSent) {
+          if(payload.urgencyScore > 70) {
+            addBot("🔥 Perfect! High priority alert sent to Clement. He'll call you within 30 minutes!");
+          } else {
+            addBot("✅ Your details have been sent to Clement. You'll hear back within 2 hours!");
+          }
+        } else {
+          addBot("📧 Your details have been captured. Clement will follow up soon!");
+        }
+      } else if(window.directLeadCapture) {
         await window.directLeadCapture.captureDirectLead(payload, 'chatbot');
         addBot("🎯 Perfect! Your details have been captured. Clement will personally call you within 30 minutes!");
       } else if(WEBHOOK_URL && WEBHOOK_URL.startsWith('http')){

@@ -134,7 +134,19 @@ if (leadForm) {
         submitBtn.disabled = true;
         
         try {
-            // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES
+            // Calculate urgency score first
+            data.urgencyScore = calculateUrgencyScore(data);
+            data.businessPotential = assessBusinessPotential(data);
+            data.followUpRecommendation = getFollowUpRecommendation(data);
+            
+            // SEND REAL EMAIL TO YOUR INBOX + STORE LOCALLY
+            let emailSent = false;
+            if (window.web3FormsNotifications) {
+                const result = await window.web3FormsNotifications.processCompleteNotification(data, 'demo-form');
+                emailSent = result.email.success;
+            }
+            
+            // Also store locally as backup
             if (window.directLeadCapture) {
                 await window.directLeadCapture.captureDirectLead(data, 'demo-form');
             }
@@ -360,6 +372,69 @@ function updatePricingForService(serviceType) {
     console.log('Service type selected:', serviceType);
 }
 
+// Helper functions for lead scoring (same as used in chatbot)
+function calculateUrgencyScore(lead) {
+    let score = 0;
+    
+    if (lead.phone) score += 25;
+    if (lead.email) score += 15;
+    
+    const message = (lead.message || '').toLowerCase();
+    const service = (lead.service || '').toLowerCase();
+    
+    // Urgency indicators in message
+    if (message.includes('asap') || message.includes('urgent') || message.includes('immediately')) score += 30;
+    if (message.includes('this week') || message.includes('soon')) score += 20;
+    
+    // Service type specificity
+    if (service && !service.includes('other')) score += 10;
+    
+    // High-value services
+    if (service.includes('hvac') || service.includes('electrical') || service.includes('plumbing')) score += 15;
+    
+    // Message length (more detailed = higher intent)
+    if (message && message.length > 50) score += 10;
+    
+    // Business name provided (more serious)
+    if (lead.business && lead.business.trim().length > 2) score += 10;
+    
+    return Math.min(score, 100);
+}
+
+function assessBusinessPotential(lead) {
+    const indicators = [];
+    const message = (lead.message || '').toLowerCase();
+    const service = (lead.service || '').toLowerCase();
+    
+    if (service.includes('hvac') || service.includes('electrical')) indicators.push('High-value services');
+    if (message.includes('asap') || message.includes('urgent')) indicators.push('Ready to invest');
+    if (message.includes('busy') || message.includes('missing calls')) indicators.push('Losing revenue now');
+    if (lead.business && lead.business.trim().length > 2) indicators.push('Established business');
+    
+    if (indicators.length >= 3) return 'HIGH ($5K+ potential)';
+    if (indicators.length >= 2) return 'MEDIUM ($2-5K potential)';
+    return 'STANDARD ($1-2K potential)';
+}
+
+function getFollowUpRecommendation(lead) {
+    if (lead.urgencyScore > 70) {
+        return `IMMEDIATE ACTION: This is a hot lead! Call ${lead.phone || 'them'} within 30 minutes. They're ready to move fast.`;
+    }
+    
+    const message = (lead.message || '').toLowerCase();
+    const service = (lead.service || '').toLowerCase();
+    
+    if (message.includes('missing calls') || message.includes('busy')) {
+        return 'Focus on pain point: They\'re losing money right now from missed opportunities. Lead with ROI and immediate results.';
+    }
+    
+    if (service.includes('hvac') || service.includes('electrical')) {
+        return 'High-value service business: Focus on premium features and advanced automation. They can afford higher packages.';
+    }
+    
+    return 'Standard follow-up: Qualify their current situation and biggest pain points. Send case study for their industry.';
+}
+
 // Add service type change listener to forms
 document.querySelectorAll('select[name="service"]').forEach(select => {
     select.addEventListener('change', function() {
@@ -391,7 +466,19 @@ if (contactForm) {
         submitBtn.disabled = true;
         
         try {
-            // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES  
+            // Calculate urgency score first
+            data.urgencyScore = calculateUrgencyScore(data);
+            data.businessPotential = assessBusinessPotential(data);
+            data.followUpRecommendation = getFollowUpRecommendation(data);
+            
+            // SEND REAL EMAIL TO YOUR INBOX + STORE LOCALLY
+            let emailSent = false;
+            if (window.web3FormsNotifications) {
+                const result = await window.web3FormsNotifications.processCompleteNotification(data, 'contact-form');
+                emailSent = result.email.success;
+            }
+            
+            // Also store locally as backup
             if (window.directLeadCapture) {
                 await window.directLeadCapture.captureDirectLead(data, 'contact-form');
             }
