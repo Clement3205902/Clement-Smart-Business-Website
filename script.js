@@ -351,6 +351,42 @@ document.querySelectorAll('select[name="service"]').forEach(select => {
     });
 });
 
+// Contact Form Submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            business: formData.get('business'),
+            service: formData.get('service'),
+            message: formData.get('message')
+        };
+        
+        // Show success message
+        showNotification('Thank you for your message! We\'ll get back to you within 2 hours.', 'success');
+        
+        // Reset form
+        contactForm.reset();
+        
+        // Here you would typically send the data to your backend
+        console.log('Contact form submitted:', data);
+        
+        // Simulate opening booking widget after contact
+        setTimeout(() => {
+            showNotification('Would you like to schedule a call right now?', 'info');
+            setTimeout(() => {
+                openBookingWidget();
+            }, 2000);
+        }, 3000);
+    });
+}
+
 // Hero Slideshow Management
 function initHeroSlideshow() {
     const slides = document.querySelectorAll('.slide');
