@@ -330,10 +330,10 @@
     }
 
     try{
-      // SEND REAL LEAD TO CLEMENT
-      if(window.leadCapture) {
-        await window.leadCapture.captureRealtimeLead(payload, 'chatbot');
-        addBot("🎯 Perfect! Clement will personally call you within 30 minutes to discuss your automation setup!");
+      // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES
+      if(window.directLeadCapture) {
+        await window.directLeadCapture.captureDirectLead(payload, 'chatbot');
+        addBot("🎯 Perfect! Your details have been captured. Clement will personally call you within 30 minutes!");
       } else if(WEBHOOK_URL && WEBHOOK_URL.startsWith('http')){
         await fetch(WEBHOOK_URL, { 
           method:'POST', 

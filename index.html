@@ -666,9 +666,120 @@
     </section>
 
     <script src="advanced-images.js"></script>
-    <script src="lead-capture-setup.js"></script>
+    <script src="direct-email-capture.js"></script>
     <script src="smart-chatbot.js"></script>
     <script src="leadgen-chatbot.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Personal Leads Dashboard for Clement -->
+    <div id="leadsdashboard" style="position: fixed; top: 10px; right: 10px; z-index: 1000000; display: none;">
+        <div style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); width: 350px; max-height: 400px; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #dc2626;">📊 My Leads Dashboard</h3>
+                <button onclick="closeDashboard()" style="background: none; border: none; font-size: 18px; cursor: pointer;">×</button>
+            </div>
+            <div id="dashboardContent" style="font-size: 12px; font-family: monospace;"></div>
+            <div style="margin-top: 10px;">
+                <button onclick="refreshDashboard()" style="background: #dc2626; color: white; padding: 5px 10px; border: none; border-radius: 5px; font-size: 11px; cursor: pointer; margin-right: 5px;">Refresh</button>
+                <button onclick="clearAllLeads()" style="background: #6b7280; color: white; padding: 5px 10px; border: none; border-radius: 5px; font-size: 11px; cursor: pointer;">Clear All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Toggle Button -->
+    <button id="dashboardToggle" onclick="toggleDashboard()" style="position: fixed; top: 10px; right: 10px; z-index: 1000000; background: #dc2626; color: white; padding: 8px 12px; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; display: none;">📊 Leads (<span id="leadCount">0</span>)</button>
+
+    <script>
+        // Dashboard functionality
+        function toggleDashboard() {
+            const dashboard = document.getElementById('leadsdashboard');
+            const button = document.getElementById('dashboardToggle');
+            
+            if (dashboard.style.display === 'none' || !dashboard.style.display) {
+                dashboard.style.display = 'block';
+                refreshDashboard();
+            } else {
+                dashboard.style.display = 'none';
+            }
+        }
+
+        function closeDashboard() {
+            document.getElementById('leadsdashboard').style.display = 'none';
+        }
+
+        function refreshDashboard() {
+            if (window.directLeadCapture) {
+                const leads = window.directLeadCapture.getAllLeads();
+                const analytics = window.directLeadCapture.getAnalytics();
+                
+                // Update lead count
+                document.getElementById('leadCount').textContent = leads.length;
+                
+                // Show dashboard content
+                const content = document.getElementById('dashboardContent');
+                if (leads.length === 0) {
+                    content.innerHTML = '<p style="color: #6b7280;">No leads captured yet.</p>';
+                } else {
+                    let html = `<div style="margin-bottom: 10px; padding: 8px; background: #f0fdf4; border-radius: 5px;">
+                        <strong>📈 Total Leads: ${leads.length}</strong><br>
+                        <small>Last updated: ${new Date(localStorage.getItem('lastLeadUpdate') || Date.now()).toLocaleString()}</small>
+                    </div>`;
+                    
+                    // Show recent leads
+                    html += '<div style="margin-bottom: 10px;"><strong>🔥 Recent Leads:</strong></div>';
+                    leads.slice(0, 5).forEach((lead, index) => {
+                        const urgencyColor = lead.urgencyScore > 70 ? '#dc2626' : lead.urgencyScore > 40 ? '#f59e0b' : '#6b7280';
+                        html += `
+                            <div style="margin-bottom: 8px; padding: 6px; border-left: 3px solid ${urgencyColor}; background: #f9fafb;">
+                                <strong>${lead.name || 'Anonymous'}</strong><br>
+                                <small>${lead.businessType || 'Unknown'} • ${lead.phone || lead.email || 'No contact'}</small><br>
+                                <small style="color: ${urgencyColor};">Urgency: ${lead.urgencyScore}/100 • ${lead.businessPotential}</small><br>
+                                <small style="color: #6b7280;">${new Date(lead.timestamp).toLocaleString()} via ${lead.source}</small>
+                            </div>
+                        `;
+                    });
+                    
+                    if (leads.length > 5) {
+                        html += `<small style="color: #6b7280;">... and ${leads.length - 5} more leads</small>`;
+                    }
+                    
+                    content.innerHTML = html;
+                }
+            }
+        }
+
+        function clearAllLeads() {
+            if (confirm('Are you sure you want to clear all lead data?')) {
+                if (window.directLeadCapture) {
+                    window.directLeadCapture.clearAllData();
+                    document.getElementById('leadCount').textContent = '0';
+                    refreshDashboard();
+                }
+            }
+        }
+
+        // Show dashboard button and check for leads on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the dashboard toggle button
+            document.getElementById('dashboardToggle').style.display = 'block';
+            
+            // Update lead count
+            setTimeout(() => {
+                if (window.directLeadCapture) {
+                    const leads = window.directLeadCapture.getAllLeads();
+                    document.getElementById('leadCount').textContent = leads.length;
+                    
+                    // Auto-show dashboard if there are new leads
+                    if (leads.length > 0 && !sessionStorage.getItem('dashboardSeen')) {
+                        setTimeout(() => {
+                            document.getElementById('leadsdashboard').style.display = 'block';
+                            refreshDashboard();
+                            sessionStorage.setItem('dashboardSeen', 'true');
+                        }, 5000);
+                    }
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

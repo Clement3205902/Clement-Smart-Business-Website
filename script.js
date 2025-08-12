@@ -134,9 +134,9 @@ if (leadForm) {
         submitBtn.disabled = true;
         
         try {
-            // SEND REAL LEAD TO CLEMENT
-            if (window.leadCapture) {
-                await window.leadCapture.captureRealtimeLead(data, 'demo-form');
+            // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES
+            if (window.directLeadCapture) {
+                await window.directLeadCapture.captureDirectLead(data, 'demo-form');
             }
             
             // Reset form
@@ -391,9 +391,9 @@ if (contactForm) {
         submitBtn.disabled = true;
         
         try {
-            // SEND REAL LEAD TO CLEMENT
-            if (window.leadCapture) {
-                await window.leadCapture.captureRealtimeLead(data, 'contact-form');
+            // SEND LEAD DIRECTLY VIA EMAIL - NO THIRD PARTY SERVICES  
+            if (window.directLeadCapture) {
+                await window.directLeadCapture.captureDirectLead(data, 'contact-form');
             }
             
             // Reset form
