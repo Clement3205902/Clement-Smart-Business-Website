@@ -405,31 +405,28 @@
         <a href="#demo" class="btn-primary">Get Free Quote</a>
     </div>
 
-    <!-- Chatbot Widget -->
-    <div id="chatWidget" class="chat-widget">
-        <div class="chat-button" onclick="toggleChat()">
-            <i class="fas fa-comments"></i>
-            <span class="chat-notification">1</span>
-        </div>
-        <div class="chat-window enhanced" id="chatWindow">
-            <div class="chat-header ai-powered">
-                <h4>Hi! I'm your AI assistant</h4>
-                <button onclick="toggleChat()">×</button>
+    <!-- Enhanced LeadGen Chatbot Widget -->
+    <button class="chat-launcher" aria-label="Get More Jobs Automatically" id="launcher">🚀</button>
+
+    <section class="chat-panel" id="panel" role="dialog" aria-label="SmartGrowth Lead Assistant">
+        <header class="chat-header">
+            <div class="chat-avatar">SG</div>
+            <div>
+                <div class="chat-title">SmartGrowth Assistant</div>
+                <div class="chat-sub">Get more jobs automatically 🎯</div>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="bot-message">
-                    <p>Hi! I can help you get a quote and schedule service. What do you need help with?</p>
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Type your message..." id="chatInput">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    </div>
+            <div class="badge">7‑day setup</div>
+        </header>
+        <main class="chat-body" id="chat"></main>
+        <footer class="chat-input">
+            <input id="freeText" placeholder="Type your message here..." />
+            <button class="send-btn" id="sendBtn">Send</button>
+        </footer>
+    </section>
 
     <script src="advanced-images.js"></script>
     <script src="smart-chatbot.js"></script>
+    <script src="leadgen-chatbot.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
