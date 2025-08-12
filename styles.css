@@ -1136,7 +1136,7 @@ body {
 
 /* Floating launcher - SmartGrowth styling */
 .chat-launcher{
-  position:fixed; right:20px; bottom:20px; z-index:999999;
+  position:fixed; left:20px; bottom:20px; z-index:999999;
   width:70px; height:70px; border-radius:50%; border:none;
   background:linear-gradient(135deg, var(--brand), var(--brand-2));
   color:#fff; cursor:pointer; box-shadow:var(--shadow);
@@ -1155,7 +1155,7 @@ body {
 
 /* Panel - Enhanced for SmartGrowth */
 .chat-panel{
-  position:fixed; right:20px; bottom:110px; width:380px; max-width:94vw; height:580px; max-height:85vh;
+  position:fixed; left:20px; bottom:110px; width:380px; max-width:94vw; height:580px; max-height:85vh;
   background:var(--panel); border-radius:20px; box-shadow:var(--shadow); overflow:hidden; display:none; flex-direction:column;
   z-index:999999; border:1px solid #f1f5f9;
 }
@@ -1250,9 +1250,9 @@ body {
 /* Mobile optimizations */
 @media (max-width: 480px) {
   .chat-panel { 
-    right:10px; bottom:100px; width:calc(100vw - 20px); height:calc(100vh - 120px);
+    left:10px; bottom:100px; width:calc(100vw - 20px); height:calc(100vh - 120px);
   }
-  .chat-launcher { right:15px; bottom:15px; width:60px; height:60px; }
+  .chat-launcher { left:15px; bottom:15px; width:60px; height:60px; }
 }
 .chat-window.enhanced {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
